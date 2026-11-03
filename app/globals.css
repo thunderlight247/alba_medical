@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body { @apply bg-slate-50 text-slate-800 antialiased; }
+:focus-visible { outline: 2px solid #0d9488; outline-offset: 3px; }
