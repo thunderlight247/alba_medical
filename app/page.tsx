@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, MotionConfig, type Variants } from "framer-motion";
+import Image from "next/image";
 import {
-  Accessibility, Activity, BadgeCheck, DoorOpen, FlaskConical, HeartPulse, MapPin,
+  Activity, BadgeCheck, FlaskConical, HeartPulse, MapPin,
   MessageCircle, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
   Waves, Clock, type LucideIcon,
 } from "lucide-react";
@@ -68,10 +69,10 @@ function Hero() {
           <BadgeCheck className="h-4 w-4" /> HEFRA licensed and NHIS accredited
         </motion.div>
         <motion.h1 variants={item} className="text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
-          Accurate diagnostics for Bolgatanga, led by 30 years of laboratory science
+          Accurate diagnostics for Bolgatanga, backed by 35+ years of laboratory practice
         </motion.h1>
         <motion.p variants={item} className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-          Laboratory tests, color Doppler ultrasound and ECG at {SITE.name}, on Melcom Road. Pay with Mobile Money or your NHIS card.
+          Laboratory tests, color Doppler ultrasound and ECG at {SITE.name}, on Commercial Street. Pay with Mobile Money or your NHIS card.
         </motion.p>
         <motion.div variants={item} className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
           <WhatsAppButton className="w-full sm:w-auto" />
@@ -103,7 +104,7 @@ function Trust() {
           <motion.div variants={item} className={`${tile} border-teal-900 bg-gradient-to-br from-teal-700 to-teal-900 text-white sm:col-span-2 lg:row-span-2`}>
             <ShieldCheck className="h-10 w-10 text-teal-200" strokeWidth={1.5} />
             <h3 className="mt-6 text-2xl font-bold">HEFRA licensed</h3>
-            <p className="mt-3 max-w-sm text-teal-100">Licensed by the Health Institutions and Facilities Regulatory Agency of Ghana, so our premises, equipment and practice are held to national standards.</p>
+            <p className="mt-3 max-w-sm text-teal-100">Licensed by the Health Facilities Regulatory Agency of Ghana, so our premises, equipment and practice are held to national standards.</p>
             <svg className="absolute -bottom-10 -right-10 h-56 w-56 text-white/10" viewBox="0 0 100 100" aria-hidden><circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white`}>
@@ -120,16 +121,23 @@ function Trust() {
             <p className="mt-1 text-sm text-slate-600">Google rating from patients</p>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white sm:col-span-2`}>
-            <p className="text-6xl font-extrabold tracking-tight text-teal-700">30+</p>
-            <h3 className="mt-2 text-xl font-bold text-slate-900">Years of laboratory practice</h3>
-            <p className="mt-2 text-sm text-slate-600">Directed by a retired Chief Medical Laboratory Scientist.</p>
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-6xl font-extrabold tracking-tight text-teal-700">35+</p>
+                <h3 className="mt-2 text-xl font-bold text-slate-900">Years of laboratory practice</h3>
+                <p className="mt-2 text-sm text-slate-600">Directed by a retired Chief Medical Laboratory Scientist.</p>
+              </div>
+              <div className="relative h-40 w-28 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-52 sm:w-36">
+                <Image src={IMAGES.award} alt="GAMLS Special Award recognizing long service in medical laboratory science" fill sizes="(min-width: 640px) 144px, 112px" className="object-contain" />
+              </div>
+            </div>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-sky-200 bg-gradient-to-r from-sky-50 to-teal-50 sm:col-span-2 lg:col-span-4`}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
               <div>
                 <h3 className="text-xl font-bold text-slate-900">Pay the way you already do</h3>
-                <p className="mt-1 text-sm text-slate-600">We accept Mobile Money (MoMo) and mobile NFC payments, along with NHIS cover.</p>
+                <p className="mt-1 text-sm text-slate-600">We accept Mobile Money (MoMo) payments and NHIS cover.</p>
               </div>
             </div>
           </motion.div>
@@ -143,7 +151,7 @@ function Trust() {
 type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src: string; alt: string; points: string[] };
 const SERVICES: Service[] = [
   { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "African laboratory scientist working at a bench", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
-  { title: "Color Doppler ultrasound", text: "Sonography with blood-flow imaging for pregnancy, abdominal and vascular scans.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer performing an ultrasound scan in an African clinic", points: ["Pregnancy and abdominal scans", "Blood-flow assessment", "Same-visit reporting"] },
+  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer performing an ultrasound scan in an African clinic", points: ["Pregnancy scan (Obs Scan)", "Pelvic scan", "Prostate scan", "Abdominal scan", "Breast scan", "Small part (thyroid, knee, swelling, etc.)"] },
   { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG monitor showing a heart rhythm in a clinic", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
 
@@ -176,14 +184,13 @@ function Services() {
 /* ---------- map and geography ---------- */
 function Location() {
   const access: { Icon: LucideIcon; label: string }[] = [
-    { Icon: DoorOpen, label: "Wheelchair-accessible entrance" },
     { Icon: ParkingCircle, label: "Parking lot on site" },
-    { Icon: Accessibility, label: "Wheelchair-accessible restroom" },
+    { Icon: BadgeCheck, label: "Neat restrooms" },
   ];
   return (
     <section className="mx-auto max-w-6xl px-6 py-20">
       <motion.div {...inView} variants={container}>
-        <SectionHeading title="Find us on Melcom Road" text={`${SITE.landmark}, in the centre of Bolgatanga.`} />
+        <SectionHeading title="Find us on Commercial Street" text={`${SITE.landmark}, in the center of Bolgatanga.`} />
         <div className="grid items-stretch gap-6 lg:grid-cols-5">
           <motion.div variants={item} className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm lg:col-span-3">
             <div className="aspect-video w-full lg:h-full lg:min-h-[22rem]">
@@ -222,7 +229,7 @@ function Footer() {
         <motion.div variants={item}>
           <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
           <p className="mt-1 text-sm text-slate-400">Also listed as {SITE.altName}</p>
-          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed. NHIS accredited. Mobile Money and NFC payments accepted.</p>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed. NHIS accredited. Mobile Money payments accepted.</p>
           <WhatsAppButton className="mt-6" />
         </motion.div>
 
@@ -258,6 +265,7 @@ function Footer() {
             <h3 className="mb-3 font-semibold text-white">Location</h3>
             <a href={SITE.mapLink} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-slate-800 px-4 py-3 transition hover:border-teal-500 hover:text-white">
               <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-teal-400" /> {SITE.address}</span>
+              <span className="mt-1 block pl-6 text-xs text-slate-400">{SITE.landmark}, in the center of Bolgatanga.</span>
               <span className="mt-1 block pl-6 font-mono text-xs text-slate-400">Plus Code {SITE.plusCode}</span>
             </a>
           </div>
