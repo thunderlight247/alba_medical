@@ -8,6 +8,7 @@ import {
   Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
   Stethoscope, TestTubes, Waves, X, type LucideIcon,
 } from "lucide-react";
+import BrandMark from "@/components/BrandMark";
 import ImageBlock from "@/components/ImageBlock";
 import { useOpenStatus } from "@/components/useOpenStatus";
 import { HOURS_ROWS, IMAGES, LAB_TESTS, SITE, WHATSAPP_URL, whatsappLink } from "@/lib/site";
@@ -60,8 +61,8 @@ function Nav() {
     <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-900/5 bg-white/90 backdrop-blur-xl">
       <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:px-6">
         <a href="#home" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-2.5 py-1">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-teal-700 text-white shadow-sm">
-            <Activity className="h-5 w-5" />
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-teal-600 via-teal-700 to-emerald-800 text-white shadow-sm ring-1 ring-inset ring-white/15">
+            <BrandMark className="h-[22px] w-[22px]" />
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-sm font-extrabold tracking-tight text-slate-900">Alba Medical</span>
@@ -519,8 +520,13 @@ function Footer() {
     <footer className="bg-slate-950 pb-28 pt-16 text-slate-300 md:pb-14">
       <motion.div {...inView} variants={container} className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-6 md:grid-cols-3">
         <motion.div variants={item}>
-          <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
-          <p className="mt-1 text-sm text-slate-400">Also listed as {SITE.altName}</p>
+          <div className="flex items-center gap-3">
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 text-white ring-1 ring-inset ring-white/15">
+              <BrandMark className="h-7 w-7" />
+            </span>
+            <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
+          </div>
+          <p className="mt-2 text-sm text-slate-400">Also listed as {SITE.altName}</p>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed and NHIS accredited. Pay with your NHIS card, cash or MoMo.</p>
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center rounded-xl bg-white px-2.5 py-2">
