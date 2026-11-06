@@ -2,9 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 body { @apply bg-slate-50 text-slate-800 antialiased; }
 :focus-visible { outline: 2px solid #0d9488; outline-offset: 3px; }
+
+/* Skip link: parked above the viewport until focused, so it never covers content. */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 60;
+  border-radius: 9999px;
+  background-color: #0f172a;
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform 150ms ease;
+}
+.skip-link:focus { transform: none; }
+@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }

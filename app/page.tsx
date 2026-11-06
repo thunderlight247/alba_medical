@@ -1,15 +1,16 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { motion, MotionConfig, type Variants } from "framer-motion";
 import Image from "next/image";
 import {
-  Activity, BadgeCheck, FlaskConical, HeartPulse, MapPin,
-  MessageCircle, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
-  Waves, Clock, type LucideIcon,
+  Activity, BadgeCheck, ClipboardList, Clock, Dna, FlaskConical, HeartPulse, MapPin,
+  Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
+  TestTubes, Waves, X, type LucideIcon,
 } from "lucide-react";
 import ImageBlock from "@/components/ImageBlock";
 import { useOpenStatus } from "@/components/useOpenStatus";
-import { HOURS_ROWS, IMAGES, SITE, WHATSAPP_URL } from "@/lib/site";
+import { HOURS_ROWS, IMAGES, LAB_TESTS, SITE, WHATSAPP_URL, whatsappLink } from "@/lib/site";
 
 /* ---------- motion orchestration ---------- */
 const container: Variants = {
@@ -29,7 +30,7 @@ function WhatsAppButton({ className = "", label = "Book via WhatsApp" }: { class
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-600/25 transition hover:bg-emerald-500 active:scale-[0.98] ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800 active:scale-[0.98] ${className}`}
     >
       <MessageCircle className="h-5 w-5" /> {label}
     </a>
@@ -38,10 +39,75 @@ function WhatsAppButton({ className = "", label = "Book via WhatsApp" }: { class
 
 function SectionHeading({ title, text }: { title: string; text: string }) {
   return (
-    <motion.div variants={item} className="mx-auto mb-12 max-w-2xl text-center">
+    <motion.div variants={item} className="mx-auto mb-10 max-w-2xl text-center sm:mb-12">
       <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h2>
       <p className="mt-3 text-base leading-relaxed text-slate-600">{text}</p>
     </motion.div>
+  );
+}
+
+/* ---------- navigation ---------- */
+const NAV = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
+];
+
+function Nav() {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-slate-900/5 bg-white/90 backdrop-blur-xl">
+      <nav aria-label="Main" className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:px-6">
+        <a href="#home" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-2.5 py-1">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-teal-700 text-white shadow-sm">
+            <Activity className="h-5 w-5" />
+          </span>
+          <span className="min-w-0 leading-tight">
+            <span className="block truncate text-sm font-extrabold tracking-tight text-slate-900">Alba Medical</span>
+            <span className="block truncate text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">Diagnostic Centre</span>
+          </span>
+        </a>
+        <ul className="hidden items-center gap-1 md:flex">
+          {NAV.map((n) => (
+            <li key={n.href}>
+              <a href={n.href} className="rounded-full px-3.5 py-2 text-sm font-semibold text-slate-600 transition hover:bg-teal-50 hover:text-teal-800">
+                {n.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-800 md:inline-flex">
+          <MessageCircle className="h-4 w-4" /> Book
+        </a>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 text-slate-700 transition hover:bg-slate-50 md:hidden"
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </nav>
+      {open && (
+        <div id="mobile-menu" className="max-h-[calc(100dvh-9rem)] overflow-y-auto overscroll-contain border-t border-slate-100 bg-white px-4 pb-4 pt-2 md:hidden">
+          <ul className="flex flex-col">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <a href={n.href} onClick={() => setOpen(false)} className="block rounded-xl px-3 py-3 text-base font-semibold text-slate-700 transition hover:bg-teal-50 hover:text-teal-800">
+                  {n.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800">
+            <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+          </a>
+        </div>
+      )}
+    </header>
   );
 }
 
@@ -49,7 +115,7 @@ function SectionHeading({ title, text }: { title: string; text: string }) {
 function Hero() {
   const status = useOpenStatus();
   return (
-    <section className="relative isolate overflow-hidden bg-gradient-to-b from-white via-teal-50/60 to-slate-50">
+    <section id="home" className="relative isolate overflow-hidden bg-gradient-to-b from-white via-teal-50/60 to-slate-50">
       <svg className="pointer-events-none absolute inset-0 -z-10 h-full w-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden>
         <defs>
           <radialGradient id="m1" cx="50%" cy="50%" r="50%"><stop offset="0" stopColor="#2dd4bf" stopOpacity=".55" /><stop offset="1" stopColor="#2dd4bf" stopOpacity="0" /></radialGradient>
@@ -64,17 +130,17 @@ function Hero() {
         <motion.circle cx="620" cy="620" r="280" fill="url(#m3)" animate={{ cx: [620, 700, 620] }} transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }} />
       </svg>
 
-      <motion.div variants={container} initial="hidden" animate="show" className="mx-auto flex max-w-4xl flex-col items-center px-6 pb-24 pt-24 text-center sm:pt-32">
+      <motion.div variants={container} initial="hidden" animate="show" className="mx-auto flex max-w-4xl flex-col items-center px-5 pb-16 pt-24 text-center sm:px-6 sm:pb-24 sm:pt-36">
         <motion.div variants={item} className="mb-6 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/70 px-4 py-1.5 text-xs font-medium text-teal-800 backdrop-blur">
           <BadgeCheck className="h-4 w-4" /> HEFRA licensed and NHIS accredited
         </motion.div>
-        <motion.h1 variants={item} className="text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
+        <motion.h1 variants={item} className="text-balance text-[2rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 min-[420px]:text-4xl sm:text-6xl sm:leading-[1.05]">
           Accurate diagnostics for Bolgatanga, backed by 35+ years of laboratory practice
         </motion.h1>
-        <motion.p variants={item} className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-          Laboratory tests, color Doppler ultrasound and ECG at {SITE.name}, on Commercial Street. Pay with Mobile Money or your NHIS card.
+        <motion.p variants={item} className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
+          Laboratory tests, color Doppler ultrasound and ECG at {SITE.name}, on Commercial Street. Pay cash, with Mobile Money or your NHIS card.
         </motion.p>
-        <motion.div variants={item} className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
+        <motion.div variants={item} className="mt-7 flex w-full flex-col items-center justify-center gap-3 sm:mt-9 sm:w-auto sm:flex-row">
           <WhatsAppButton className="w-full sm:w-auto" />
           <a href={`tel:${SITE.phonePrimary.tel}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition hover:border-teal-500 hover:text-teal-700 sm:w-auto">
             <Phone className="h-4 w-4" /> Call {SITE.phonePrimary.display}
@@ -95,13 +161,13 @@ function Hero() {
 
 /* ---------- trust bento ---------- */
 function Trust() {
-  const tile = "relative overflow-hidden rounded-3xl border p-7";
+  const tile = "relative overflow-hidden rounded-3xl border p-6 sm:p-7";
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section id="about" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20">
       <motion.div {...inView} variants={container}>
-        <SectionHeading title="A licensed facility you can verify" text="Regulated, insured and run by a laboratory scientist who has spent three decades in the field." />
-        <div className="grid auto-rows-[minmax(11rem,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <motion.div variants={item} className={`${tile} border-teal-900 bg-gradient-to-br from-teal-700 to-teal-900 text-white sm:col-span-2 lg:row-span-2`}>
+        <SectionHeading title="A licensed facility you can verify" text="Regulated, insured and run by a laboratory scientist who has spent more than three decades in the field." />
+        <div className="grid gap-4 sm:auto-rows-[minmax(11rem,auto)] sm:grid-cols-2 lg:grid-cols-4">
+          <motion.div variants={item} className={`${tile} border-teal-900 bg-gradient-to-br from-teal-700 to-teal-900 text-white sm:col-span-2 lg:row-span-2 lg:flex lg:flex-col lg:justify-center`}>
             <ShieldCheck className="h-10 w-10 text-teal-200" strokeWidth={1.5} />
             <h3 className="mt-6 text-2xl font-bold">HEFRA licensed</h3>
             <p className="mt-3 max-w-sm text-teal-100">Licensed by the Health Facilities Regulatory Agency of Ghana, so our premises, equipment and practice are held to national standards.</p>
@@ -113,21 +179,26 @@ function Trust() {
             <p className="mt-2 text-sm text-slate-600">Bring your National Health Insurance card.</p>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white`}>
-            <div className="flex gap-0.5" aria-label="4.3 out of 5 stars">
+            <div className="flex gap-0.5" role="img" aria-label="4.3 out of 5 stars">
               {[0, 1, 2, 3].map((i) => <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />)}
-              <Star className="h-5 w-5 text-amber-400" style={{ clipPath: "inset(0 70% 0 0)", fill: "#fbbf24" }} />
+              <span className="relative inline-block h-5 w-5 shrink-0">
+                <Star className="h-5 w-5 text-amber-400/40" />
+                <span className="absolute inset-y-0 left-0 w-[30%] overflow-hidden">
+                  <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
+                </span>
+              </span>
             </div>
             <h3 className="mt-5 text-3xl font-bold text-slate-900">4.3</h3>
             <p className="mt-1 text-sm text-slate-600">Google rating from patients</p>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white sm:col-span-2`}>
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div>
                 <p className="text-6xl font-extrabold tracking-tight text-teal-700">35+</p>
                 <h3 className="mt-2 text-xl font-bold text-slate-900">Years of laboratory practice</h3>
                 <p className="mt-2 text-sm text-slate-600">Directed by a retired Chief Medical Laboratory Scientist.</p>
               </div>
-              <div className="relative h-40 w-28 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:h-52 sm:w-36">
+              <div className="relative mx-auto h-40 w-28 shrink-0 overflow-hidden rounded-xl border border-slate-200 bg-slate-100 sm:mx-0 sm:h-52 sm:w-36">
                 <Image src={IMAGES.award} alt="GAMLS Special Award recognizing long service in medical laboratory science" fill sizes="(min-width: 640px) 144px, 112px" className="object-contain" />
               </div>
             </div>
@@ -137,7 +208,7 @@ function Trust() {
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
               <div>
                 <h3 className="text-xl font-bold text-slate-900">Pay the way you already do</h3>
-                <p className="mt-1 text-sm text-slate-600">We accept Mobile Money (MoMo) payments and NHIS cover.</p>
+                <p className="mt-1 text-sm text-slate-600">We accept cash, Mobile Money (MoMo) payments and NHIS cover.</p>
               </div>
             </div>
           </motion.div>
@@ -150,17 +221,17 @@ function Trust() {
 /* ---------- services ---------- */
 type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src: string; alt: string; points: string[] };
 const SERVICES: Service[] = [
-  { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "African laboratory scientist working at a bench", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
-  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer performing an ultrasound scan in an African clinic", points: ["Pregnancy scan (Obs Scan)", "Pelvic scan", "Prostate scan", "Abdominal scan", "Breast scan", "Small part (thyroid, knee, swelling, etc.)"] },
-  { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG monitor showing a heart rhythm in a clinic", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
+  { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist pipetting a sample in the lab", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
+  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer at an ultrasound console with a patient", points: ["Abdominal and abdominal-pelvic scan", "Pelvic and obstetric (OBS) scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
+  { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
 
 function Services() {
   return (
-    <section className="bg-white py-20">
-      <motion.div {...inView} variants={container} className="mx-auto max-w-6xl px-6">
+    <section id="services" className="scroll-mt-24 bg-white py-16 sm:py-20">
+      <motion.div {...inView} variants={container} className="mx-auto max-w-6xl px-5 sm:px-6">
         <SectionHeading title="What we test and scan" text="Three core services under one roof, with results you can take straight to your doctor." />
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s) => (
             <motion.article key={s.title} variants={item} whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 20 }} className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/70 p-4 backdrop-blur-xl">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-teal-400/0 via-teal-400/0 to-sky-400/0 opacity-0 transition duration-500 group-hover:from-teal-400/15 group-hover:to-sky-400/20 group-hover:opacity-100" />
@@ -181,6 +252,121 @@ function Services() {
   );
 }
 
+/* ---------- laboratory menu ---------- */
+const LAB_ICONS: LucideIcon[] = [Microscope, TestTubes, ClipboardList, Dna];
+
+function LabTests() {
+  return (
+    <section id="tests" className="scroll-mt-24 bg-slate-50 py-16 sm:py-20">
+      <motion.div {...inView} variants={container} className="mx-auto max-w-6xl px-5 sm:px-6">
+        <SectionHeading
+          title="The full laboratory menu"
+          text="Our laboratory menu, grouped by discipline. Ask at reception or on WhatsApp for the current price of any test."
+        />
+        <div className="grid gap-4 lg:grid-cols-3 lg:items-start">
+          {LAB_TESTS.map((group, i) => {
+            const Icon = LAB_ICONS[i] ?? FlaskConical;
+            return (
+              <motion.article
+                key={group.group}
+                variants={item}
+                className={`rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6 ${i === 3 ? "lg:col-span-3" : ""}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-teal-50 text-teal-700">
+                    <Icon className="h-5 w-5" strokeWidth={1.7} />
+                  </span>
+                  <h3 className="min-w-0 text-lg font-bold text-slate-900">{group.group}</h3>
+                  <span className="ml-auto shrink-0 whitespace-nowrap rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+                    {group.tests.length} tests
+                  </span>
+                </div>
+                <ul className="mt-5 flex flex-wrap gap-1.5">
+                  {group.tests.map((t) => (
+                    <li key={t} className="max-w-full rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium leading-snug text-slate-700">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+            );
+          })}
+        </div>
+        <motion.div variants={item} className="mt-6 flex flex-col items-center justify-between gap-4 rounded-3xl border border-teal-200 bg-gradient-to-r from-teal-50 to-sky-50 p-6 sm:flex-row">
+          <p className="text-sm leading-relaxed text-slate-700">
+            <span className="font-semibold text-slate-900">Cash, Mobile Money and NHIS accepted.</span> Ask us for the current price of any test on WhatsApp.
+          </p>
+          <WhatsAppButton className="w-full shrink-0 sm:w-auto" label="Ask about a test" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ---------- quick WhatsApp request ---------- */
+function QuickRequest() {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const value = (key: string) => String(data.get(key) ?? "").trim();
+    const lines = [
+      `Hello ${SITE.name}, I would like to book an appointment.`,
+      value("name") && `Name: ${value("name")}`,
+      value("phone") && `Phone: ${value("phone")}`,
+      value("service") && `Service: ${value("service")}`,
+      value("when") && `Preferred day and time: ${value("when")}`,
+      value("notes") && `Notes: ${value("notes")}`,
+    ].filter(Boolean);
+    const url = whatsappLink(lines.join("\n"));
+    const opened = window.open(url, "_blank");
+    if (!opened) window.location.href = url;
+  };
+
+  const field =
+    "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20";
+  const label = "mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500";
+
+  return (
+    <motion.div variants={item} className="mt-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+      <h3 className="text-xl font-bold text-slate-900">Send a quick request</h3>
+      <p className="mt-1 text-sm text-slate-600">Fill this in and it opens WhatsApp with your details ready to send.</p>
+      <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className={label}>Full name</label>
+          <input id="name" name="name" required autoComplete="name" placeholder="Your name" className={field} />
+        </div>
+        <div>
+          <label htmlFor="phone" className={label}>Phone number</label>
+          <input id="phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="0XX XXX XXXX" className={field} />
+        </div>
+        <div>
+          <label htmlFor="service" className={label}>Service</label>
+          <select id="service" name="service" defaultValue="Laboratory tests" className={field}>
+            <option>Laboratory tests</option>
+            <option>Color Doppler ultrasound</option>
+            <option>ECG heart monitoring</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="when" className={label}>Preferred day and time</label>
+          <input id="when" name="when" placeholder="e.g. Monday morning" className={field} />
+        </div>
+        <div className="sm:col-span-2">
+          <label htmlFor="notes" className={label}>Anything else</label>
+          <textarea id="notes" name="notes" rows={3} placeholder="Test or scan you need, or a question" className={`${field} resize-none`} />
+        </div>
+        <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-slate-500">Your message goes straight to our WhatsApp line.</p>
+          <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-700 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800 active:scale-[0.98] sm:w-auto">
+            <MessageCircle className="h-5 w-5" /> Send on WhatsApp
+          </button>
+        </div>
+      </form>
+    </motion.div>
+  );
+}
+
 /* ---------- map and geography ---------- */
 function Location() {
   const access: { Icon: LucideIcon; label: string }[] = [
@@ -188,16 +374,16 @@ function Location() {
     { Icon: BadgeCheck, label: "Neat restrooms" },
   ];
   return (
-    <section className="mx-auto max-w-6xl px-6 py-20">
+    <section id="contact" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20">
       <motion.div {...inView} variants={container}>
         <SectionHeading title="Find us on Commercial Street" text={`${SITE.landmark}, in the center of Bolgatanga.`} />
         <div className="grid items-stretch gap-6 lg:grid-cols-5">
-          <motion.div variants={item} className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm lg:col-span-3">
+          <motion.div variants={item} className="relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-teal-600 lg:col-span-3">
             <div className="aspect-video w-full lg:h-full lg:min-h-[22rem]">
               <iframe title={`Map showing ${SITE.name}`} src={SITE.mapEmbed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-full w-full border-0" allowFullScreen />
             </div>
           </motion.div>
-          <motion.div variants={item} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-7 lg:col-span-2">
+          <motion.div variants={item} className="flex flex-col rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 lg:col-span-2">
             <div className="flex items-start gap-3">
               <MapPin className="mt-1 h-5 w-5 shrink-0 text-teal-700" />
               <div>
@@ -205,7 +391,14 @@ function Location() {
                 <p className="mt-1 text-sm text-slate-600">Plus Code: <span className="font-mono font-semibold text-slate-800">{SITE.plusCode}</span></p>
               </div>
             </div>
-            <ul className="mt-6 space-y-3">
+            <div className="mt-5 space-y-2">
+              {[SITE.phonePrimary, SITE.phoneSecondary].map((p) => (
+                <a key={p.tel} href={`tel:${p.tel}`} className="flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-800 transition hover:border-teal-500 hover:text-teal-700">
+                  <Phone className="h-4 w-4 text-teal-700" /> {p.display}
+                </a>
+              ))}
+            </div>
+            <ul className="mt-5 space-y-3">
               {access.map(({ Icon, label }) => (
                 <li key={label} className="flex items-center gap-3 rounded-2xl bg-teal-50 px-4 py-3 text-sm font-medium text-teal-900"><Icon className="h-5 w-5" />{label}</li>
               ))}
@@ -215,6 +408,7 @@ function Location() {
             </a>
           </motion.div>
         </div>
+        <QuickRequest />
       </motion.div>
     </section>
   );
@@ -225,11 +419,11 @@ function Footer() {
   const status = useOpenStatus();
   return (
     <footer className="bg-slate-950 pb-28 pt-16 text-slate-300 md:pb-14">
-      <motion.div {...inView} variants={container} className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
+      <motion.div {...inView} variants={container} className="mx-auto grid max-w-6xl gap-10 px-5 sm:px-6 md:grid-cols-3">
         <motion.div variants={item}>
           <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
           <p className="mt-1 text-sm text-slate-400">Also listed as {SITE.altName}</p>
-          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed. NHIS accredited. Mobile Money payments accepted.</p>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed. NHIS accredited. Cash, Mobile Money and NHIS accepted.</p>
           <WhatsAppButton className="mt-6" />
         </motion.div>
 
@@ -241,7 +435,7 @@ function Footer() {
               return (
                 <li key={r.days} className={`rounded-xl border px-4 py-3 ${today ? "border-teal-500/60 bg-teal-500/10" : "border-slate-800"}`}>
                   <p className="font-medium text-slate-100">{r.days}</p>
-                  <p className={r.time === "Closed" ? "text-slate-500" : "text-teal-300"}>{r.time}</p>
+                  <p className={r.time === "Closed" ? "text-slate-400" : "text-teal-300"}>{r.time}</p>
                 </li>
               );
             })}
@@ -256,7 +450,7 @@ function Footer() {
                 <a key={p.tel} href={`tel:${p.tel}`} className="flex items-center gap-3 rounded-xl border border-slate-800 px-4 py-3 transition hover:border-teal-500 hover:text-white">
                   <Phone className="h-4 w-4 text-teal-400" />
                   <span>{p.display}</span>
-                  <span className="ml-auto text-xs text-slate-500">{i === 0 ? "Primary line" : "Secondary desk"}</span>
+                  <span className="ml-auto text-xs text-slate-400">{i === 0 ? "Primary line" : "Secondary desk"}</span>
                 </a>
               ))}
             </div>
@@ -271,7 +465,7 @@ function Footer() {
           </div>
         </motion.div>
       </motion.div>
-      <p className="mx-auto mt-12 max-w-6xl px-6 text-xs text-slate-500">© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
+      <p className="mx-auto mt-12 max-w-6xl px-5 text-xs text-slate-400 sm:px-6">© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
     </footer>
   );
 }
@@ -281,7 +475,7 @@ function MobileBar() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 flex gap-3 border-t border-slate-800 bg-slate-950/90 p-3 backdrop-blur md:hidden" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}>
       <a href={`tel:${SITE.phonePrimary.tel}`} className="flex flex-1 items-center justify-center gap-2 rounded-full border border-slate-700 py-3 text-sm font-semibold text-white"><Phone className="h-4 w-4" /> Call</a>
-      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex flex-[2] items-center justify-center gap-2 rounded-full bg-emerald-600 py-3 text-sm font-semibold text-white"><MessageCircle className="h-4 w-4" /> Book via WhatsApp</a>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex flex-[2] items-center justify-center gap-2 rounded-full bg-emerald-700 py-3 text-sm font-semibold text-white"><MessageCircle className="h-4 w-4" /> Book via WhatsApp</a>
     </div>
   );
 }
@@ -289,10 +483,15 @@ function MobileBar() {
 export default function Page() {
   return (
     <MotionConfig reducedMotion="user">
-      <main>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+      <Nav />
+      <main id="main" tabIndex={-1}>
         <Hero />
         <Trust />
         <Services />
+        <LabTests />
         <Location />
       </main>
       <Footer />

@@ -8,7 +8,7 @@ const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", di
 export const metadata: Metadata = {
   title: "Alba Medical Diagnostic Centre | Laboratory, Ultrasound & ECG in Bolgatanga",
   description:
-    "HEFRA licensed and NHIS accredited diagnostic centre on Commercial Street, Bolgatanga. Laboratory tests, color Doppler ultrasound and ECG. Book on WhatsApp.",
+    "HEFRA licensed and NHIS accredited diagnostic centre on Commercial Street, Bolgatanga. Laboratory tests, color Doppler ultrasound and ECG. Cash, Mobile Money and NHIS accepted.",
 };
 
 export const viewport: Viewport = { themeColor: "#020617", width: "device-width", initialScale: 1 };
