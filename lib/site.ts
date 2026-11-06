@@ -133,8 +133,10 @@ export const LAB_TESTS = [
 
 /** Drop your own photos into /public/images using these names. */
 export const IMAGES = {
-  lab: "/images/lab-scientist-africa.jpg",
+  lab: "/images/lab-technician-africa.jpg",
   ultrasound: "/images/ultrasound-scan-africa.jpg",
   ecg: "/images/ecg-electrodes-closeup.jpg",
   award: "/images/alba-award.jpeg",
+  hefra: "/images/hefra-logo.png",
+  nhis: "/images/nhis-logo.jpg",
 };

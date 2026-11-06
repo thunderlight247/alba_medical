@@ -4,14 +4,18 @@
 import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 
-type Props = { src: string; alt: string; Icon: LucideIcon };
+type Props = { src?: string; alt?: string; Icon: LucideIcon };
 
-/** Uniform 16:9 image frame. If the photo is missing it falls back to a geometric panel, never a blank box. */
-export default function ImageBlock({ src, alt, Icon }: Props) {
+/**
+ * Uniform 16:9 frame. Pass a photo and it is shown; pass no photo (or let it fail to load)
+ * and the frame becomes a designed panel with the service icon, never a blank box.
+ */
+export default function ImageBlock({ src, alt = "", Icon }: Props) {
   const [failed, setFailed] = useState(false);
+  const showPhoto = Boolean(src) && !failed;
   return (
     <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gradient-to-br from-teal-100 via-sky-50 to-emerald-100">
-      {!failed && (
+      {showPhoto && (
         <img
           src={src}
           alt={alt}
@@ -21,7 +25,7 @@ export default function ImageBlock({ src, alt, Icon }: Props) {
           className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
-      {failed && (
+      {!showPhoto && (
         <>
           <svg className="absolute inset-0 h-full w-full" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden>
             <defs>

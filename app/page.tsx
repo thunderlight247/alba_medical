@@ -4,9 +4,9 @@ import { useState, type FormEvent } from "react";
 import { motion, MotionConfig, type Variants } from "framer-motion";
 import Image from "next/image";
 import {
-  Activity, BadgeCheck, ClipboardList, Clock, Dna, FlaskConical, HeartPulse, MapPin,
+  Activity, BadgeCheck, ClipboardList, Clock, CreditCard, Dna, FlaskConical, HeartPulse, MapPin,
   Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
-  TestTubes, Waves, X, type LucideIcon,
+  Stethoscope, TestTubes, Waves, X, type LucideIcon,
 } from "lucide-react";
 import ImageBlock from "@/components/ImageBlock";
 import { useOpenStatus } from "@/components/useOpenStatus";
@@ -135,10 +135,10 @@ function Hero() {
           <BadgeCheck className="h-4 w-4" /> HEFRA licensed and NHIS accredited
         </motion.div>
         <motion.h1 variants={item} className="text-balance text-[2rem] font-extrabold leading-[1.15] tracking-tight text-slate-900 min-[420px]:text-4xl sm:text-6xl sm:leading-[1.05]">
-          Accurate diagnostics for Bolgatanga, backed by 35+ years of laboratory practice
+          Accurate diagnostics for Bolgatanga and beyond
         </motion.h1>
         <motion.p variants={item} className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg">
-          Laboratory tests, color Doppler ultrasound and ECG at {SITE.name}, on Commercial Street. Pay cash, with Mobile Money or your NHIS card.
+          Laboratory tests, color Doppler ultrasound and ECG on Commercial Street. We do not only serve Bolga: our coverage spans the whole Upper East Region and parts of the Northern Region.
         </motion.p>
         <motion.div variants={item} className="mt-7 flex w-full flex-col items-center justify-center gap-3 sm:mt-9 sm:w-auto sm:flex-row">
           <WhatsAppButton className="w-full sm:w-auto" />
@@ -146,6 +146,16 @@ function Hero() {
             <Phone className="h-4 w-4" /> Call {SITE.phonePrimary.display}
           </a>
         </motion.div>
+        <motion.ul variants={item} className="mt-7 flex flex-wrap items-center justify-center gap-2 text-xs font-medium sm:text-sm">
+          <li className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-3.5 py-1.5 text-slate-700 backdrop-blur">
+            <CreditCard className="h-4 w-4 shrink-0 text-emerald-700" />
+            Pay with your <strong className="font-semibold text-emerald-800">NHIS card</strong>, cash or MoMo
+          </li>
+          <li className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/80 px-3.5 py-1.5 text-slate-700 backdrop-blur">
+            <Stethoscope className="h-4 w-4 shrink-0 text-teal-700" />
+            Clinician requests and walk-in (self-request) clients
+          </li>
+        </motion.ul>
         <motion.p variants={item} className="mt-6 flex min-h-6 items-center gap-2 text-sm text-slate-600" aria-live="polite">
           {status && (
             <>
@@ -171,12 +181,17 @@ function Trust() {
             <ShieldCheck className="h-10 w-10 text-teal-200" strokeWidth={1.5} />
             <h3 className="mt-6 text-2xl font-bold">HEFRA licensed</h3>
             <p className="mt-3 max-w-sm text-teal-100">Licensed by the Health Facilities Regulatory Agency of Ghana, so our premises, equipment and practice are held to national standards.</p>
+            <span className="mt-6 inline-flex w-fit items-center rounded-2xl bg-white px-3 py-2 shadow-sm">
+              <Image src={IMAGES.hefra} alt="Health Facilities Regulatory Agency (HeFRA) logo" width={200} height={72} className="h-10 w-auto" />
+            </span>
             <svg className="absolute -bottom-10 -right-10 h-56 w-56 text-white/10" viewBox="0 0 100 100" aria-hidden><circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white`}>
-            <BadgeCheck className="h-8 w-8 text-emerald-600" strokeWidth={1.6} />
-            <h3 className="mt-5 text-xl font-bold text-slate-900">NHIS accredited</h3>
-            <p className="mt-2 text-sm text-slate-600">Bring your National Health Insurance card.</p>
+            <span className="inline-flex items-center rounded-xl border border-slate-100 bg-white px-2 py-1.5 shadow-sm">
+              <Image src={IMAGES.nhis} alt="National Health Insurance Scheme (NHIS) logo" width={147} height={69} className="h-11 w-auto" />
+            </span>
+            <h3 className="mt-4 text-xl font-bold text-slate-900">NHIS accredited</h3>
+            <p className="mt-2 text-sm text-slate-600">Pay with your <strong className="font-semibold text-slate-900">NHIS card</strong>. Bring it to every visit.</p>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white`}>
             <div className="flex gap-0.5" role="img" aria-label="4.3 out of 5 stars">
@@ -207,8 +222,8 @@ function Trust() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
               <div>
-                <h3 className="text-xl font-bold text-slate-900">Pay the way you already do</h3>
-                <p className="mt-1 text-sm text-slate-600">We accept cash, Mobile Money (MoMo) payments and NHIS cover.</p>
+                <h3 className="text-xl font-bold text-slate-900">Pay with your NHIS card, cash or MoMo</h3>
+                <p className="mt-1 text-sm text-slate-600">Your NHIS card is the simplest way to pay. Bring it along and we will confirm what it covers before anything is done. Cash and Mobile Money (MoMo) are accepted for the rest.</p>
               </div>
             </div>
           </motion.div>
@@ -219,9 +234,9 @@ function Trust() {
 }
 
 /* ---------- services ---------- */
-type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src: string; alt: string; points: string[] };
+type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src?: string; alt?: string; points: string[] };
 const SERVICES: Service[] = [
-  { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist pipetting a sample in the lab", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
+  { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory technician examining a sample under a microscope", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
   { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer at an ultrasound console with a patient", points: ["Abdominal and abdominal-pelvic scan", "Pelvic and obstetric (OBS) scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
   { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
@@ -294,9 +309,92 @@ function LabTests() {
         </div>
         <motion.div variants={item} className="mt-6 flex flex-col items-center justify-between gap-4 rounded-3xl border border-teal-200 bg-gradient-to-r from-teal-50 to-sky-50 p-6 sm:flex-row">
           <p className="text-sm leading-relaxed text-slate-700">
-            <span className="font-semibold text-slate-900">Cash, Mobile Money and NHIS accepted.</span> Ask us for the current price of any test on WhatsApp.
+            <span className="font-semibold text-slate-900">Pay with your NHIS card, cash or MoMo.</span> Ask us for the current price of any test on WhatsApp.
           </p>
           <WhatsAppButton className="w-full shrink-0 sm:w-auto" label="Ask about a test" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ---------- payment, NHIS conditions and preparation ---------- */
+const REQUEST_ITEMS = [
+  "Name of the health facility generating the request",
+  "Full name of the client",
+  "Date of birth",
+  "Gender",
+  "Client registration number at the health facility",
+  "NHIS number, with the NHIS status active",
+  "Provisional diagnosis or summary of clinical findings",
+  "List of laboratory tests or the type of scan to be done",
+  "Name of the clinician making the request",
+  "Signature of the clinician",
+  "Stamp of the health facility",
+];
+
+const FASTING_ITEMS = ["FBS, urine sugar and HbA1C", "Lipid profile", "Abdominal and Abdomino-Pelvic scans"];
+
+function Payment() {
+  return (
+    <section id="nhis" className="scroll-mt-24 bg-white py-16 sm:py-20">
+      <motion.div {...inView} variants={container} className="mx-auto max-w-6xl px-5 sm:px-6">
+        <motion.div variants={item} className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-800">
+            <CreditCard className="h-4 w-4" /> Payment
+          </span>
+          <h2 className="mt-5 text-balance text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            Conditions that qualify one to pay with NHIS card
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-slate-600">
+            Pay with your <strong className="font-semibold text-emerald-800">NHIS card</strong>, cash or MoMo. For NHIS to cover a lab test or scan, the request should carry all of the details below.
+          </p>
+        </motion.div>
+
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          <motion.article variants={item} className="rounded-3xl border border-slate-200 bg-slate-50/70 p-5 shadow-sm sm:p-7">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900">
+              <ClipboardList className="h-5 w-5 shrink-0 text-teal-700" /> A lab or scan request should include
+            </h3>
+            <ol className="mt-5 space-y-2.5">
+              {REQUEST_ITEMS.map((text, i) => (
+                <li key={text} className="flex items-start gap-3 text-sm text-slate-700">
+                  <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-teal-50 text-[11px] font-bold text-teal-800">{i + 1}</span>
+                  <span className="leading-relaxed">{text}</span>
+                </li>
+              ))}
+            </ol>
+          </motion.article>
+          <motion.article variants={item} className="rounded-3xl border border-teal-200 bg-gradient-to-br from-teal-50 to-sky-50 p-5 shadow-sm sm:p-7">
+            <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900">
+              <Clock className="h-5 w-5 shrink-0 text-teal-700" /> Client preparation for some procedures
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-700">
+              If you are coming for any of the procedures below, <strong className="font-semibold text-slate-900">fast overnight</strong> and come to Alba Medical early, preferably before 10:00 AM.
+            </p>
+            <ul className="mt-4 space-y-2">
+              {FASTING_ITEMS.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm font-medium text-slate-800">
+                  <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />{item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 rounded-2xl bg-white/70 p-4 text-sm leading-relaxed text-slate-700">
+              Abdominal scans can be done at any other time of the day, as long as your stomach is not full of food.
+            </p>
+          </motion.article>
+        </div>
+
+        <motion.div variants={item} className="mt-6 flex flex-col items-center justify-between gap-4 rounded-3xl border border-teal-200 bg-gradient-to-r from-teal-50 to-sky-50 p-6 text-center sm:flex-row sm:text-left">
+          <p className="text-sm leading-relaxed text-slate-700">
+            <span className="font-semibold text-slate-900">Clinician referrals and walk-in (self-request) clients are both welcome</span> for all our services. Not sure what your NHIS card covers? Ask us before you come in.
+          </p>
+          <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
+            <WhatsAppButton label="Ask about NHIS cover" className="w-full sm:w-auto" />
+            <a href={`tel:${SITE.phonePrimary.tel}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:border-teal-500 hover:text-teal-700">
+              <Phone className="h-4 w-4" /> Call
+            </a>
+          </div>
         </motion.div>
       </motion.div>
     </section>
@@ -423,7 +521,15 @@ function Footer() {
         <motion.div variants={item}>
           <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
           <p className="mt-1 text-sm text-slate-400">Also listed as {SITE.altName}</p>
-          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed. NHIS accredited. Cash, Mobile Money and NHIS accepted.</p>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed and NHIS accredited. Pay with your NHIS card, cash or MoMo.</p>
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center rounded-xl bg-white px-2.5 py-2">
+              <Image src={IMAGES.hefra} alt="Health Facilities Regulatory Agency (HeFRA) logo" width={200} height={72} className="h-7 w-auto" />
+            </span>
+            <span className="inline-flex items-center rounded-xl bg-white px-2.5 py-2">
+              <Image src={IMAGES.nhis} alt="National Health Insurance Scheme (NHIS) logo" width={147} height={69} className="h-7 w-auto" />
+            </span>
+          </div>
           <WhatsAppButton className="mt-6" />
         </motion.div>
 
@@ -492,6 +598,7 @@ export default function Page() {
         <Trust />
         <Services />
         <LabTests />
+        <Payment />
         <Location />
       </main>
       <Footer />

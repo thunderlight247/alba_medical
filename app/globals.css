@@ -25,7 +25,5 @@ body { @apply bg-slate-50 text-slate-800 antialiased; }
   font-size: 0.875rem;
   font-weight: 600;
   transform: translateY(-200%);
-  transition: transform 150ms ease;
 }
 .skip-link:focus { transform: none; }
-@media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
