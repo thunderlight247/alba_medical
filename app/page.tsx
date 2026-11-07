@@ -653,15 +653,7 @@ function Footer() {
           </div>
         </motion.div>
       </motion.div>
-      <div className="mx-auto mt-12 flex max-w-6xl flex-col gap-1 px-5 text-xs text-slate-400 sm:px-6">
-        <p>© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
-        <p>
-          Photos:{" "}
-          <a className="underline decoration-slate-600 underline-offset-2 transition hover:text-slate-200" href="https://commons.wikimedia.org/wiki/File:Laborantin_au_Microscope_%C3%A0_Laquintinie_Cameroun_30.jpg" target="_blank" rel="noopener noreferrer">Happi Raphael</a>{" "}
-          and{" "}
-          <a className="underline decoration-slate-600 underline-offset-2 transition hover:text-slate-200" href="https://commons.wikimedia.org/wiki/File:IMG-20200120-WA0028.jpg" target="_blank" rel="noopener noreferrer">Mimiessien</a>, CC BY-SA 4.0, via Wikimedia Commons.
-        </p>
-      </div>
+      <p className="mx-auto mt-12 max-w-6xl px-5 text-xs text-slate-400 sm:px-6">© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
     </footer>
   );
 }

@@ -21,4 +21,4 @@ Sources and licences:
   ecg-electrodes-closeup.jpg - Pexels, free to use:
                                https://www.pexels.com/photo/close-up-shot-of-a-medical-equipment-7108362/
 
-Both CC BY-SA 4.0 photos are cropped to 16:9 and credited in the site footer.
+Both CC BY-SA 4.0 photos are cropped to 16:9. That licence requires attribution wherever they are published, so the footer credit must be restored (or the photos replaced) if either stays on the site.
