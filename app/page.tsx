@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { motion, MotionConfig, type Variants } from "framer-motion";
 import Image from "next/image";
 import {
-  Activity, BadgeCheck, ClipboardList, Clock, CreditCard, Dna, FlaskConical, HeartPulse, Info, MapPin,
+  Activity, Award, BadgeCheck, ClipboardList, Clock, CreditCard, Dna, FlaskConical, HeartPulse, Info, MapPin,
   Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, Plus, ShieldCheck, Smartphone, Star,
   Stethoscope, TestTubes, Waves, X, type LucideIcon,
 } from "lucide-react";
@@ -54,6 +54,7 @@ const NAV = [
   { label: "Services", href: "#services" },
   { label: "Tests", href: "#tests" },
   { label: "NHIS", href: "#nhis" },
+  { label: "Articles", href: "/blog" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -223,6 +224,30 @@ function Trust() {
               </div>
             </div>
           </motion.div>
+          <motion.div variants={item} className={`${tile} border-slate-800 bg-slate-950 text-white sm:col-span-2 lg:col-span-4`}>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+              <div className="relative mx-auto w-full max-w-[18rem] shrink-0 overflow-hidden rounded-2xl border border-white/10 shadow-2xl sm:max-w-[15rem]">
+                <Image
+                  src={IMAGES.embassyAward}
+                  alt="Hero's Award certificate from the Embassy of the United States of America, Accra, presented to Amadu Batong Alhassan on 18 March 2015 for outstanding leadership and support for the Upper East Regional Hospital"
+                  width={720}
+                  height={543}
+                  sizes="(min-width: 640px) 240px, 80vw"
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="min-w-0">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-teal-300">
+                  <Award className="h-3.5 w-3.5" /> Recognition
+                </span>
+                <h3 className="mt-4 text-xl font-bold text-white">Hero&rsquo;s Award from the Embassy of the United States</h3>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-300">
+                  Presented in Accra on 18 March 2015 to Amadu Batong Alhassan for outstanding leadership and support for the Upper East Regional Hospital.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div variants={item} className={`${tile} border-sky-200 bg-gradient-to-r from-sky-50 to-teal-50 sm:col-span-2 lg:col-span-4`}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
@@ -363,7 +388,7 @@ function Payment() {
             <Info className="h-5 w-5" />
           </span>
           <p className="text-sm leading-relaxed text-amber-950 sm:text-base">
-            <strong className="font-semibold">NHIS covers all our services if the request is properly completed.</strong> It does not cover the external referral tests.
+            <strong className="font-semibold">NHIS covers all our services if the request is properly completed.</strong> It does not cover the external referral tests and ECG.
           </p>
         </motion.div>
 
@@ -484,6 +509,10 @@ function QuickRequest() {
 /* ---------- frequently asked questions ---------- */
 const FAQ_ITEMS = [
   {
+    q: "Can I book an appointment?",
+    a: `Yes. You can book ahead by calling ${SITE.phonePrimary.display} or sending us a WhatsApp message with the service you need and your preferred day and time. Walk-in (self-request) clients are also attended to during opening hours.`,
+  },
+  {
     q: "Do I need a clinician's request to be seen?",
     a: "No. Clinician referrals and walk-in (self-request) clients are both welcome for all our services. If you want to use your NHIS card, the request has to come from a health facility and be properly completed.",
   },
@@ -493,7 +522,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Does NHIS cover every test?",
-    a: "NHIS covers all our services when the request is properly completed. It does not cover the external referral tests.",
+    a: "NHIS covers all our services when the request is properly completed. It does not cover the external referral tests and ECG.",
+  },
+  {
+    q: "Is my visit private?",
+    a: "Yes. Patient procedures are handled and conducted in absolute privacy.",
   },
   {
     q: "How do I prepare for a fasting test?",

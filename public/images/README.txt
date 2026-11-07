@@ -10,6 +10,9 @@ edge; confirm the licence before publishing.
 
 The laboratory experience tile displays alba-award.jpeg, a portrait photo of a GAMLS service award.
 
+The "Recognition" tile displays heroes-award-embassy.jpg: the framed Hero's Award certificate from the
+Embassy of the United States of America, Accra, dated 18 March 2015. Supplied by the centre at 720x543.
+
 Regulator / scheme logos (shown as accreditation badges in the "A licensed facility you can verify"
 section and in the footer, never as the Alba Medical brand mark):
   hefra-logo.png   - Health Facilities Regulatory Agency (HeFRA), Ghana
