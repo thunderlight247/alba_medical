@@ -3,7 +3,8 @@ export const SITE = {
   altName: "Alba-Baal Medical Diagnostics",
   address: "Commercial Street, Bolgatanga, Upper East Region, Ghana",
   plusCode: "Q4QV+MW2",
-  landmark: "Next to Jumia pick-up office and Get Rich Super Market",
+  digitalAddress: "UB-0003-5813",
+  landmark: "Next to Jumia pick-up center and Get Rich SuperMarket",
   phonePrimary: { display: "+233 24 471 6535", tel: "+233244716535" },
   phoneSecondary: { display: "+233 20 800 0654", tel: "+233208000654" },
   mapEmbed: "https://www.google.com/maps?q=Q4QV%2BMW2%20Commercial%20Road%20Bolgatanga%20Ghana&z=17&output=embed",
@@ -81,16 +82,6 @@ export const LAB_TESTS = [
     ],
   },
   {
-    group: "External & referral tests",
-    tests: [
-      "Hepatitis B Viral Load",
-      "Hepatitis C Viral Load",
-      "HIV Viral Load",
-      "Blood C/S",
-      "Specimen for Biopsy",
-    ],
-  },
-  {
     group: "Biochemistry & Serology",
     tests: [
       "Hepatitis B (Rapid)",
@@ -112,10 +103,7 @@ export const LAB_TESTS = [
       "OGTT",
       "2hr Post Prandial (HPP)",
       "Thyroid Hormones (TSH, T3, T4)",
-      "Thyroid Hormones (Each)",
-      "Female Hormones (EST, PRG, PRL, LH, FSH)",
-      "Female Hormones (Each)",
-      "B-HCG",
+      "Female Hormones (EST, PRG, PRL, LH, FSH, B-HCG)",
       "Male Hormones (test)",
       "Troponin",
       "C-Reactive Protein (CRP)",
@@ -129,12 +117,16 @@ export const LAB_TESTS = [
       "Glycosylated Haemoglobin (HbA1c)",
     ],
   },
+  {
+    group: "External & referral tests",
+    tests: ["Hepatitis B Viral Load", "Hepatitis C Viral Load", "HIV Viral Load", "Blood C/S", "Specimen for Biopsy"],
+  },
 ] as const;
 
 /** Drop your own photos into /public/images using these names. */
 export const IMAGES = {
-  lab: "/images/lab-technician-africa.jpg",
-  ultrasound: "/images/ultrasound-scan-africa.jpg",
+  lab: "/images/lab-microscope-africa.jpg",
+  ultrasound: "/images/ultrasound-pregnant-africa.jpg",
   ecg: "/images/ecg-electrodes-closeup.jpg",
   award: "/images/alba-award.jpeg",
   hefra: "/images/hefra-logo.png",

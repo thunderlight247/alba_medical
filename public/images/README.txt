@@ -1,6 +1,6 @@
 Service photos used by the three diagnostic service cards:
-  lab-technician-africa.jpg     - laboratory technician at a microscope in a clinical lab
-  ultrasound-scan-africa.jpg    - sonographer at an ultrasound console with a patient
+  lab-microscope-africa.jpg     - laboratory scientist at a microscope in a clinical lab
+  ultrasound-pregnant-africa.jpg - sonographer applying gel for an abdominal scan on a pregnant client
   ecg-electrodes-closeup.jpg    - ECG electrodes attached to a patient's chest
 
 The laboratory experience tile displays alba-award.jpeg, a portrait photo of a GAMLS service award.
@@ -13,9 +13,12 @@ section and in the footer, never as the Alba Medical brand mark):
                      https://www.nhis.gov.gh/img/logo.jpg
 
 Sources and licences:
-  lab-technician-africa.jpg  - "lab technician checks blood sample", CC0 (public domain),
-                               via Openverse / Rawpixel
+  lab-microscope-africa.jpg  - "Laborantin au Microscope à Laquintinie Cameroun 30", Happi Raphael,
+                               CC BY-SA 4.0, via Wikimedia Commons:
+                               https://commons.wikimedia.org/wiki/File:Laborantin_au_Microscope_%C3%A0_Laquintinie_Cameroun_30.jpg
+  ultrasound-pregnant-africa.jpg - "IMG-20200120-WA0028", Mimiessien, CC BY-SA 4.0, via Wikimedia Commons:
+                               https://commons.wikimedia.org/wiki/File:IMG-20200120-WA0028.jpg
   ecg-electrodes-closeup.jpg - Pexels, free to use:
                                https://www.pexels.com/photo/close-up-shot-of-a-medical-equipment-7108362/
-  ultrasound-scan-africa.jpg - Pexels, free to use:
-                               https://www.pexels.com/photo/woman-in-gray-sweater-doing-an-ultrasound-7108420/
+
+Both CC BY-SA 4.0 photos are cropped to 16:9 and credited in the site footer.

@@ -4,8 +4,8 @@ import { useState, type FormEvent } from "react";
 import { motion, MotionConfig, type Variants } from "framer-motion";
 import Image from "next/image";
 import {
-  Activity, BadgeCheck, ClipboardList, Clock, CreditCard, Dna, FlaskConical, HeartPulse, MapPin,
-  Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, ShieldCheck, Smartphone, Star,
+  Activity, BadgeCheck, ClipboardList, Clock, CreditCard, Dna, FlaskConical, HeartPulse, Info, MapPin,
+  Menu, MessageCircle, Microscope, Navigation, ParkingCircle, Phone, Plus, ShieldCheck, Smartphone, Star,
   Stethoscope, TestTubes, Waves, X, type LucideIcon,
 } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
@@ -52,6 +52,8 @@ const NAV = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
+  { label: "Tests", href: "#tests" },
+  { label: "NHIS", href: "#nhis" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -69,16 +71,16 @@ function Nav() {
             <span className="block truncate text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">Diagnostic Centre</span>
           </span>
         </a>
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-0.5 md:flex">
           {NAV.map((n) => (
             <li key={n.href}>
-              <a href={n.href} className="rounded-full px-3.5 py-2 text-sm font-semibold text-slate-600 transition hover:bg-teal-50 hover:text-teal-800">
+              <a href={n.href} className="rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-teal-50 hover:text-teal-800">
                 {n.label}
               </a>
             </li>
           ))}
         </ul>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-800 md:inline-flex">
+        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-800 lg:inline-flex">
           <MessageCircle className="h-4 w-4" /> Book
         </a>
         <button
@@ -176,7 +178,7 @@ function Trust() {
   return (
     <section id="about" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-16 sm:px-6 sm:py-20">
       <motion.div {...inView} variants={container}>
-        <SectionHeading title="A licensed facility you can verify" text="Regulated, insured and run by a laboratory scientist who has spent more than three decades in the field." />
+        <SectionHeading title="A licensed facility you can verify" text="Regulated by both HeFRA and NHIS, insured and run by a laboratory scientist who has spent more than three decades in the field." />
         <div className="grid gap-4 sm:auto-rows-[minmax(11rem,auto)] sm:grid-cols-2 lg:grid-cols-4">
           <motion.div variants={item} className={`${tile} border-teal-900 bg-gradient-to-br from-teal-700 to-teal-900 text-white sm:col-span-2 lg:row-span-2 lg:flex lg:flex-col lg:justify-center`}>
             <ShieldCheck className="h-10 w-10 text-teal-200" strokeWidth={1.5} />
@@ -204,8 +206,10 @@ function Trust() {
                 </span>
               </span>
             </div>
-            <h3 className="mt-5 text-3xl font-bold text-slate-900">4.3</h3>
-            <p className="mt-1 text-sm text-slate-600">Google rating from patients</p>
+            <a href={SITE.mapLink} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex w-fit flex-col rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600">
+              <span className="text-3xl font-bold text-slate-900 underline decoration-slate-300 decoration-2 underline-offset-[6px] transition hover:decoration-teal-600">4.3</span>
+              <span className="mt-2 text-sm text-slate-600">Google rating from patients</span>
+            </a>
           </motion.div>
           <motion.div variants={item} className={`${tile} border-slate-200 bg-white sm:col-span-2`}>
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
@@ -224,7 +228,7 @@ function Trust() {
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
               <div>
                 <h3 className="text-xl font-bold text-slate-900">Pay with your NHIS card, cash or MoMo</h3>
-                <p className="mt-1 text-sm text-slate-600">Your NHIS card is the simplest way to pay. Bring it along and we will confirm what it covers before anything is done. Cash and Mobile Money (MoMo) are accepted for the rest.</p>
+                <p className="mt-1 text-sm text-slate-600">Your NHIS card is the simplest way to pay. Bring it along and we will confirm what it covers before anything is done. Bring it during each visit. Cash and Mobile Money (MoMo) are accepted when NHIS is inactive or for self-request (walk-in) clients.</p>
               </div>
             </div>
           </motion.div>
@@ -237,8 +241,8 @@ function Trust() {
 /* ---------- services ---------- */
 type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src?: string; alt?: string; points: string[] };
 const SERVICES: Service[] = [
-  { title: "Laboratory tests", text: "Blood, urine and routine screening, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory technician examining a sample under a microscope", points: ["Full blood count and malaria tests", "Blood sugar and urine analysis", "Clear printed results"] },
-  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer at an ultrasound console with a patient", points: ["Abdominal and abdominal-pelvic scan", "Pelvic and obstetric (OBS) scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
+  { title: "Laboratory tests", text: "Samples accepted include blood, urine, stool, high vaginal swab, semen and other body fluids, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist examining a sample under a microscope", points: [] },
+  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer scanning a pregnant patient's abdomen", points: ["Abdominal and abdominal-pelvic scan", "Obstetric (OBS) scan", "Pelvic scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
   { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
 
@@ -256,9 +260,11 @@ function Services() {
                 <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl border border-white/60 bg-white/70 text-teal-700 shadow-sm backdrop-blur"><s.Icon className="h-5 w-5" /></div>
                 <h3 className="text-xl font-bold text-slate-900">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.text}</p>
-                <ul className="mt-4 space-y-2 text-sm text-slate-700">
-                  {s.points.map((p) => (<li key={p} className="flex items-start gap-2"><BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />{p}</li>))}
-                </ul>
+                {s.points.length > 0 && (
+                  <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                    {s.points.map((p) => (<li key={p} className="flex items-start gap-2"><BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />{p}</li>))}
+                  </ul>
+                )}
               </div>
             </motion.article>
           ))}
@@ -349,6 +355,15 @@ function Payment() {
           </h2>
           <p className="mt-3 text-base leading-relaxed text-slate-600">
             Pay with your <strong className="font-semibold text-emerald-800">NHIS card</strong>, cash or MoMo. For NHIS to cover a lab test or scan, the request should carry all of the details below.
+          </p>
+        </motion.div>
+
+        <motion.div variants={item} className="mb-6 flex items-start gap-3 rounded-3xl border border-amber-300 bg-amber-50 p-5 shadow-sm sm:mb-8 sm:items-center sm:p-6">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-100 text-amber-800">
+            <Info className="h-5 w-5" />
+          </span>
+          <p className="text-sm leading-relaxed text-amber-950 sm:text-base">
+            <strong className="font-semibold">NHIS covers all our services if the request is properly completed.</strong> It does not cover the external referral tests.
           </p>
         </motion.div>
 
@@ -466,6 +481,66 @@ function QuickRequest() {
   );
 }
 
+/* ---------- frequently asked questions ---------- */
+const FAQ_ITEMS = [
+  {
+    q: "Do I need a clinician's request to be seen?",
+    a: "No. Clinician referrals and walk-in (self-request) clients are both welcome for all our services. If you want to use your NHIS card, the request has to come from a health facility and be properly completed.",
+  },
+  {
+    q: "What must the request include for NHIS to pay?",
+    a: "The facility name, your full name, date of birth, gender, client registration number, NHIS number with active status, the provisional diagnosis, the tests or scan requested, and the clinician's name, signature and facility stamp.",
+  },
+  {
+    q: "Does NHIS cover every test?",
+    a: "NHIS covers all our services when the request is properly completed. It does not cover the external referral tests we send to another laboratory.",
+  },
+  {
+    q: "How do I prepare for a fasting test?",
+    a: "Fast overnight and come early, preferably before 10:00 AM, for FBS, urine sugar, HbA1C, lipid profile or an abdominal or abdomino-pelvic scan. Abdominal scans can also be done later in the day, as long as your stomach is not full of food.",
+  },
+  {
+    q: "When are you open?",
+    a: "Monday to Friday, 8:00 AM to 5:00 PM. Saturday, 8:00 AM to 3:00 PM. Closed on Sunday.",
+  },
+  {
+    q: "Where exactly are you, and is there parking?",
+    a: `Commercial Street, Bolgatanga, ${SITE.landmark.replace("Next to ", "next to ")}. Plus Code ${SITE.plusCode}, Ghana Post GPS ${SITE.digitalAddress}. There is a parking lot on site.`,
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+function Faq() {
+  return (
+    <section id="faq" className="scroll-mt-24 bg-slate-50 py-16 sm:py-20">
+      <motion.div {...inView} variants={container} className="mx-auto max-w-3xl px-5 sm:px-6">
+        <SectionHeading title="Questions we get every day" text="Short answers before you come in. If yours is not here, message us on WhatsApp and we will reply." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((f) => (
+            <motion.details key={f.q} variants={item} className="group rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-md text-sm font-semibold text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600 sm:text-base [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <Plus className="h-4 w-4 shrink-0 text-teal-700 transition group-open:rotate-45" />
+              </summary>
+              <p className="mt-3 text-sm leading-relaxed text-slate-600">{f.a}</p>
+            </motion.details>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
 /* ---------- map and geography ---------- */
 function Location() {
   const access: { Icon: LucideIcon; label: string }[] = [
@@ -488,6 +563,7 @@ function Location() {
               <div>
                 <p className="font-semibold text-slate-900">{SITE.address}</p>
                 <p className="mt-1 text-sm text-slate-600">Plus Code: <span className="font-mono font-semibold text-slate-800">{SITE.plusCode}</span></p>
+                <p className="mt-1 text-sm text-slate-600">Ghana Post GPS: <span className="font-mono font-semibold text-slate-800">{SITE.digitalAddress}</span></p>
               </div>
             </div>
             <div className="mt-5 space-y-2">
@@ -526,7 +602,6 @@ function Footer() {
             </span>
             <h3 className="text-lg font-bold text-white">{SITE.name}</h3>
           </div>
-          <p className="mt-2 text-sm text-slate-400">Also listed as {SITE.altName}</p>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">HEFRA licensed and NHIS accredited. Pay with your NHIS card, cash or MoMo.</p>
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center rounded-xl bg-white px-2.5 py-2">
@@ -573,11 +648,20 @@ function Footer() {
               <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-teal-400" /> {SITE.address}</span>
               <span className="mt-1 block pl-6 text-xs text-slate-400">{SITE.landmark}, in the center of Bolgatanga.</span>
               <span className="mt-1 block pl-6 font-mono text-xs text-slate-400">Plus Code {SITE.plusCode}</span>
+              <span className="mt-1 block pl-6 font-mono text-xs text-slate-400">Ghana Post GPS {SITE.digitalAddress}</span>
             </a>
           </div>
         </motion.div>
       </motion.div>
-      <p className="mx-auto mt-12 max-w-6xl px-5 text-xs text-slate-400 sm:px-6">© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
+      <div className="mx-auto mt-12 flex max-w-6xl flex-col gap-1 px-5 text-xs text-slate-400 sm:px-6">
+        <p>© {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.</p>
+        <p>
+          Photos:{" "}
+          <a className="underline decoration-slate-600 underline-offset-2 transition hover:text-slate-200" href="https://commons.wikimedia.org/wiki/File:Laborantin_au_Microscope_%C3%A0_Laquintinie_Cameroun_30.jpg" target="_blank" rel="noopener noreferrer">Happi Raphael</a>{" "}
+          and{" "}
+          <a className="underline decoration-slate-600 underline-offset-2 transition hover:text-slate-200" href="https://commons.wikimedia.org/wiki/File:IMG-20200120-WA0028.jpg" target="_blank" rel="noopener noreferrer">Mimiessien</a>, CC BY-SA 4.0, via Wikimedia Commons.
+        </p>
+      </div>
     </footer>
   );
 }
@@ -605,6 +689,7 @@ export default function Page() {
         <Services />
         <LabTests />
         <Payment />
+        <Faq />
         <Location />
       </main>
       <Footer />
