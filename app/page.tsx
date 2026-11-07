@@ -241,7 +241,7 @@ function Trust() {
 /* ---------- services ---------- */
 type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src?: string; alt?: string; points: string[] };
 const SERVICES: Service[] = [
-  { title: "Laboratory tests", text: "Samples accepted include blood, urine, stool, high vaginal swab, semen and other body fluids, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist examining a sample under a microscope", points: [] },
+  { title: "Laboratory tests", text: "Samples accepted include blood, urine, stool, high vaginal swab and other body fluids, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist examining a sample under a microscope", points: [] },
   { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer scanning a pregnant patient's abdomen", points: ["Abdominal and abdominal-pelvic scan", "Obstetric (OBS) scan", "Pelvic scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
   { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
@@ -493,7 +493,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Does NHIS cover every test?",
-    a: "NHIS covers all our services when the request is properly completed. It does not cover the external referral tests we send to another laboratory.",
+    a: "NHIS covers all our services when the request is properly completed. It does not cover the external referral tests.",
   },
   {
     q: "How do I prepare for a fasting test?",
@@ -523,7 +523,7 @@ function Faq() {
   return (
     <section id="faq" className="scroll-mt-24 bg-slate-50 py-16 sm:py-20">
       <motion.div {...inView} variants={container} className="mx-auto max-w-3xl px-5 sm:px-6">
-        <SectionHeading title="Questions we get every day" text="Short answers before you come in. If yours is not here, message us on WhatsApp and we will reply." />
+        <SectionHeading title="Questions we get every day" text="Short answers before you come in. If yours is not here, message us on WhatsApp." />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <div className="space-y-3">
           {FAQ_ITEMS.map((f) => (

@@ -67,7 +67,6 @@ const clinicSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalClinic",
   name: SITE.name,
-  alternateName: SITE.altName,
   description:
     "Diagnostic centre in Bolgatanga offering laboratory tests, color Doppler ultrasound and ECG for clinician-referred and walk-in clients. HEFRA licensed and NHIS accredited.",
   telephone: SITE.phonePrimary.display,
