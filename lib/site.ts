@@ -1,5 +1,6 @@
 export const SITE = {
   name: "Alba Medical Diagnostic Centre",
+  url: "https://albamedicaldiagnostics.com",
   altName: "Alba-Baal Medical Diagnostics",
   address: "Commercial Street, Bolgatanga, Upper East Region, Ghana",
   plusCode: "Q4QV+MW2",
@@ -10,6 +11,9 @@ export const SITE = {
   mapEmbed: "https://www.google.com/maps?q=Q4QV%2BMW2%20Commercial%20Road%20Bolgatanga%20Ghana&z=17&output=embed",
   mapLink: "https://www.google.com/maps/search/?api=1&query=Q4QV%2BMW2%20Commercial%20Road%20Bolgatanga%20Ghana",
 } as const;
+
+/** Canonical origin used by metadata, Open Graph, sitemap.xml and robots.txt. */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") || SITE.url;
 
 const message =
   "Hello Alba Medical Diagnostic Centre, I would like to book an appointment. " +
@@ -129,6 +133,7 @@ export const IMAGES = {
   ultrasound: "/images/ultrasound-pregnant-africa.jpg",
   ecg: "/images/ecg-electrodes-closeup.jpg",
   award: "/images/alba-award.jpeg",
+  embassyAward: "/images/heroes-award-embassy.jpg",
   hefra: "/images/hefra-logo.png",
   nhis: "/images/nhis-logo.jpg",
 };

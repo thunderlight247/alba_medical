@@ -1,12 +1,17 @@
 import type { MetadataRoute } from "next";
-
-const base =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "");
+import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/" },
-    ...(base ? { sitemap: `${base}/sitemap.xml` } : {}),
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        // The Sanity Studio is for staff editing, not for search results.
+        disallow: ["/studio", "/studio/"],
+      },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

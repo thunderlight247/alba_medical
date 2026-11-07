@@ -1,18 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
-import { SITE } from "@/lib/site";
+import { SITE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 
-/**
- * Absolute URL for share cards, canonicals and the sitemap.
- * Uses NEXT_PUBLIC_SITE_URL when set, otherwise the production URL Vercel exposes at build time.
- */
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "") ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "");
+/** Absolute URL for share cards, canonicals and the sitemap. Set NEXT_PUBLIC_SITE_URL to override. */
+const siteUrl = SITE_URL;
+
+/** Paste the Google Search Console token into NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION. */
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
 
 const title = "Alba Medical Diagnostic Centre | Laboratory, Ultrasound & ECG in Bolgatanga";
 const description =
@@ -32,7 +30,8 @@ export const metadata: Metadata = {
     "Alba Medical Diagnostic Centre",
   ],
   authors: [{ name: SITE.name }],
-  alternates: siteUrl ? { canonical: "/" } : undefined,
+  alternates: { canonical: "/" },
+  verification: googleVerification ? { google: googleVerification } : undefined,
   openGraph: {
     type: "website",
     siteName: SITE.name,
@@ -67,6 +66,9 @@ const clinicSchema = {
   "@context": "https://schema.org",
   "@type": "MedicalClinic",
   name: SITE.name,
+  url: SITE.url,
+  image: `${SITE.url}/images/og-cover.jpg`,
+  logo: `${SITE.url}/icon.svg`,
   description:
     "Diagnostic centre in Bolgatanga offering laboratory tests, color Doppler ultrasound and ECG for clinician-referred and walk-in clients. HEFRA licensed and NHIS accredited.",
   telephone: SITE.phonePrimary.display,
