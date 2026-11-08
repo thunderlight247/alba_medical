@@ -134,6 +134,7 @@ export const IMAGES = {
   ecg: "/images/ecg-electrodes-closeup.jpg",
   award: "/images/alba-award.jpeg",
   embassyAward: "/images/heroes-award-embassy.jpg",
+  gamlsCitation: "/images/gamls-citation-alhassan-botong.jpeg",
   hefra: "/images/hefra-logo.png",
   nhis: "/images/nhis-logo.jpg",
 };

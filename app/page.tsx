@@ -248,6 +248,30 @@ function Trust() {
             </div>
           </motion.div>
 
+          <motion.div variants={item} className={`${tile} border-red-200 bg-gradient-to-br from-red-50 via-white to-slate-50 sm:col-span-2 lg:col-span-4`}>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+              <div className="relative mx-auto w-full max-w-[13rem] shrink-0 overflow-hidden rounded-2xl border border-red-200 shadow-xl sm:max-w-[11rem]">
+                <Image
+                  src={IMAGES.gamlsCitation}
+                  alt="GAMLS Citation in honour of Alhaji Alhassan Botong, presented by the Ghana Association of Medical Laboratory Scientists for over three decades of dedicated service in the Upper East Region"
+                  width={871}
+                  height={1080}
+                  sizes="(min-width: 640px) 176px, 80vw"
+                  className="h-auto w-full"
+                />
+              </div>
+              <div className="min-w-0">
+                <span className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-red-700">
+                  <Award className="h-3.5 w-3.5" /> GAMLS Citation
+                </span>
+                <h3 className="mt-4 text-xl font-bold text-slate-900">Citation from the Ghana Association of Medical Laboratory Scientists</h3>
+                <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
+                  Presented to <strong>Alhaji Alhassan Botong</strong> by GAMLS – Upper East Region in recognition of over three decades of selfless dedication as a medical laboratory scientist, serving the Upper East Region without seeking transfer, and mentoring generations of laboratory professionals.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
           <motion.div variants={item} className={`${tile} border-sky-200 bg-gradient-to-r from-sky-50 to-teal-50 sm:col-span-2 lg:col-span-4`}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <Smartphone className="h-9 w-9 shrink-0 text-sky-700" strokeWidth={1.5} />
