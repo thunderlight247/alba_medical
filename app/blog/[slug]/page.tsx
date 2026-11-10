@@ -62,7 +62,7 @@ export default async function ArticlePage({ params }: Props) {
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
     image: post.mainImage?.asset ? [urlFor(post.mainImage).width(1200).height(630).url()] : undefined,
     author: { "@type": post.author?.name ? "Person" : "Organization", name: post.author?.name || SITE.name },
-    publisher: { "@type": "MedicalClinic", name: SITE.name, url: SITE.url },
+    publisher: { "@type": "MedicalClinic", name: SITE.name, url: SITE_URL },
   };
 
   return (
