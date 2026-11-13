@@ -40,7 +40,14 @@ export const blockContent = defineType({
       name: "image",
       title: "Image",
       options: { hotspot: true },
-      fields: [defineField({ name: "alt", title: "Alternative text", type: "string", validation: (Rule) => Rule.required() })],
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alternative text",
+          type: "string",
+          validation: (Rule) => Rule.warning("Alternative text helps visually impaired readers and SEO."),
+        }),
+      ],
     }),
   ],
 });

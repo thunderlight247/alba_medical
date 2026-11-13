@@ -5,22 +5,30 @@ export const post = defineType({
   title: "Article",
   type: "document",
   fields: [
-    defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required().max(110) }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      validation: (Rule) => Rule.required().warning("A title is required to publish."),
+    }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
-      description: "The last part of the article URL. Keep it short and descriptive.",
+      description: "Click 'Generate' to create the URL slug from your title.",
       options: { source: "title", maxLength: 96 },
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error("Please click the 'Generate' button to create a URL slug."),
     }),
     defineField({
       name: "excerpt",
       title: "Summary",
       type: "text",
       rows: 3,
-      description: "One or two sentences shown on the Articles page and in search results.",
-      validation: (Rule) => Rule.required().max(200),
+      description: "One or two sentences shown on the Articles page and in search previews.",
+      validation: (Rule) =>
+        Rule.required()
+          .max(250)
+          .warning("Keeping the summary under 200 characters is best for Google search previews."),
     }),
     defineField({
       name: "mainImage",
