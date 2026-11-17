@@ -712,7 +712,8 @@ function Footer() {
       </motion.div>
       <p className="mx-auto mt-12 max-w-6xl px-5 text-xs text-slate-400 sm:px-6">
         © {new Date().getFullYear()} {SITE.name}, Bolgatanga, Ghana.
-        <span className="mx-2 text-slate-600">·</span>
+      </p>
+      <p className="mx-auto mt-1 max-w-6xl px-5 text-center text-xs text-slate-500 sm:px-6">
         Developed by <span className="font-semibold text-teal-500">Light</span>
       </p>
     </footer>
