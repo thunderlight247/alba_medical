@@ -2,6 +2,7 @@
 
 declare global {
   interface Window {
+    dataLayer?: Record<string, unknown>[];
     gtag?: (
       command: "event" | "config" | "js" | "set",
       targetIdOrEventName: string | Date,
@@ -11,19 +12,27 @@ declare global {
 }
 
 /**
- * Dispatches a custom event to Google Analytics 4 (GA4).
- * Safely executes only when window.gtag is available in the browser.
+ * Dispatches custom events to Google Tag Manager (GTM dataLayer) and GA4 (gtag).
+ * Safely executes in the browser without throwing errors.
  */
 export function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  if (typeof window === "undefined") return;
   try {
-    window.gtag("event", eventName, params);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      ...params,
+    });
+
+    if (typeof window.gtag === "function") {
+      window.gtag("event", eventName, params);
+    }
   } catch {
-    // Fail silently in environments where GA is blocked
+    // Fail silently in restricted environments
   }
 }
 
-/** Track WhatsApp booking clicks (GA4 Key Event: book_whatsapp) */
+/** Track WhatsApp booking clicks (Key Event: book_whatsapp) */
 export function trackWhatsAppClick(label = "General WhatsApp Booking", service = "") {
   trackEvent("book_whatsapp", {
     event_category: "Conversion",
@@ -32,7 +41,7 @@ export function trackWhatsAppClick(label = "General WhatsApp Booking", service =
   });
 }
 
-/** Track phone call clicks (GA4 Key Event: book_call) */
+/** Track phone call clicks (Key Event: book_call) */
 export function trackPhoneClick(phone = "+233244716535", label = "Primary Line") {
   trackEvent("book_call", {
     event_category: "Conversion",
@@ -41,7 +50,7 @@ export function trackPhoneClick(phone = "+233244716535", label = "Primary Line")
   });
 }
 
-/** Track consultation/booking form submissions (GA4 Key Event: book_form) */
+/** Track consultation/booking form submissions (Key Event: book_form) */
 export function trackFormSubmit(formName = "Contact Form", service = "") {
   trackEvent("book_form", {
     event_category: "Conversion",
