@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Link from "next/link";
 import { motion, MotionConfig, type Variants } from "framer-motion";
 import Image from "next/image";
 import {
@@ -12,6 +13,7 @@ import BrandMark from "@/components/BrandMark";
 import ImageBlock from "@/components/ImageBlock";
 import { useOpenStatus } from "@/components/useOpenStatus";
 import { HOURS_ROWS, IMAGES, LAB_TESTS, SITE, WHATSAPP_URL, whatsappLink } from "@/lib/site";
+import { trackWhatsAppClick, trackPhoneClick } from "@/lib/analytics";
 
 /* ---------- motion orchestration ---------- */
 const container: Variants = {
@@ -31,6 +33,7 @@ function WhatsAppButton({ className = "", label = "Book via WhatsApp" }: { class
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackWhatsAppClick(label)}
       className={`inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-700/25 transition hover:bg-emerald-800 active:scale-[0.98] ${className}`}
     >
       <MessageCircle className="h-5 w-5" /> {label}
@@ -81,7 +84,13 @@ function Nav() {
             </li>
           ))}
         </ul>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-800 lg:inline-flex">
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackWhatsAppClick("Navbar Book Button")}
+          className="hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-700 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-800 lg:inline-flex"
+        >
           <MessageCircle className="h-4 w-4" /> Book
         </a>
         <button
@@ -106,7 +115,16 @@ function Nav() {
               </li>
             ))}
           </ul>
-          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="mt-2 flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800">
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              setOpen(false);
+              trackWhatsAppClick("Mobile Menu Book Button");
+            }}
+            className="mt-2 flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800"
+          >
             <MessageCircle className="h-4 w-4" /> Book via WhatsApp
           </a>
         </div>
@@ -145,8 +163,12 @@ function Hero() {
           Laboratory tests, color Doppler ultrasound and ECG on Commercial Street. We do not only serve Bolga: our coverage spans the whole Upper East Region and parts of the Northern Region.
         </motion.p>
         <motion.div variants={item} className="mt-7 flex w-full flex-col items-center justify-center gap-3 sm:mt-9 sm:w-auto sm:flex-row">
-          <WhatsAppButton className="w-full sm:w-auto" />
-          <a href={`tel:${SITE.phonePrimary.tel}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition hover:border-teal-500 hover:text-teal-700 sm:w-auto">
+          <WhatsAppButton className="w-full sm:w-auto" label="Book via WhatsApp" />
+          <a
+            href={`tel:${SITE.phonePrimary.tel}`}
+            onClick={() => trackPhoneClick(SITE.phonePrimary.tel, "Hero Call Button")}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3.5 text-sm font-semibold text-slate-800 backdrop-blur transition hover:border-teal-500 hover:text-teal-700 sm:w-auto"
+          >
             <Phone className="h-4 w-4" /> Call {SITE.phonePrimary.display}
           </a>
         </motion.div>
@@ -288,11 +310,11 @@ function Trust() {
 }
 
 /* ---------- services ---------- */
-type Service = { title: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src?: string; alt?: string; points: string[] };
+type Service = { title: string; slug: string; text: string; Icon: LucideIcon; Detail: LucideIcon; src?: string; alt?: string; points: string[] };
 const SERVICES: Service[] = [
-  { title: "Laboratory tests", text: "Samples accepted include blood, urine, stool, high vaginal swab and other body fluids, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist examining a sample under a microscope", points: [] },
-  { title: "Color Doppler ultrasound", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer scanning a pregnant patient's abdomen", points: ["Abdominal and abdominal-pelvic scan", "Obstetric (OBS) scan", "Pelvic scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
-  { title: "ECG heart monitoring", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
+  { title: "Laboratory tests", slug: "medical-laboratory-tests", text: "Samples accepted include blood, urine, stool, high vaginal swab and other body fluids, handled by trained laboratory scientists.", Icon: FlaskConical, Detail: FlaskConical, src: IMAGES.lab, alt: "Laboratory scientist examining a sample under a microscope", points: [] },
+  { title: "Color Doppler ultrasound", slug: "ultrasound-scan", text: "Ultrasound scans for a range of diagnostic needs.", Icon: Waves, Detail: Waves, src: IMAGES.ultrasound, alt: "Sonographer scanning a pregnant patient's abdomen", points: ["Abdominal and abdominal-pelvic scan", "Obstetric (OBS) scan", "Pelvic scan", "Prostate scan", "Breast scan (each)", "Small part: thyroid, knee, swelling", "Doppler studies"] },
+  { title: "ECG heart monitoring", slug: "ecg-test", text: "Resting ECG readings to check heart rhythm and support your doctor's decisions.", Icon: HeartPulse, Detail: Activity, src: IMAGES.ecg, alt: "ECG electrodes attached to a patient's chest", points: ["Resting 12-lead ECG", "Quick, painless test", "Report for your doctor"] },
 ];
 
 function Services() {
@@ -302,22 +324,56 @@ function Services() {
         <SectionHeading title="What we test and scan" text="Three core services under one roof, with results you can take straight to your doctor." />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s) => (
-            <motion.article key={s.title} variants={item} whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 20 }} className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/70 p-4 backdrop-blur-xl">
+            <motion.article key={s.title} variants={item} whileHover={{ y: -6 }} transition={{ type: "spring", stiffness: 260, damping: 20 }} className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200 bg-slate-50/70 p-4 backdrop-blur-xl">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-teal-400/0 via-teal-400/0 to-sky-400/0 opacity-0 transition duration-500 group-hover:from-teal-400/15 group-hover:to-sky-400/20 group-hover:opacity-100" />
-              <ImageBlock src={s.src} alt={s.alt} Icon={s.Detail} />
-              <div className="relative p-3 pt-6">
-                <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl border border-white/60 bg-white/70 text-teal-700 shadow-sm backdrop-blur"><s.Icon className="h-5 w-5" /></div>
-                <h3 className="text-xl font-bold text-slate-900">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.text}</p>
-                {s.points.length > 0 && (
-                  <ul className="mt-4 space-y-2 text-sm text-slate-700">
-                    {s.points.map((p) => (<li key={p} className="flex items-start gap-2"><BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />{p}</li>))}
-                  </ul>
-                )}
+              <div>
+                <ImageBlock src={s.src} alt={s.alt} Icon={s.Detail} />
+                <div className="relative p-3 pt-6">
+                  <div className="mb-4 grid h-11 w-11 place-items-center rounded-xl border border-white/60 bg-white/70 text-teal-700 shadow-sm backdrop-blur"><s.Icon className="h-5 w-5" /></div>
+                  <h3 className="text-xl font-bold text-slate-900">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{s.text}</p>
+                  {s.points.length > 0 && (
+                    <ul className="mt-4 space-y-2 text-sm text-slate-700">
+                      {s.points.map((p) => (<li key={p} className="flex items-start gap-2"><BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />{p}</li>))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+              <div className="relative border-t border-slate-200/60 p-3 pt-4">
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-teal-700 hover:text-teal-900"
+                >
+                  View test details & prep guide →
+                </Link>
               </div>
             </motion.article>
           ))}
         </div>
+
+        {/* Deep SEO Links for Service Sub-Specialties */}
+        <motion.div variants={item} className="mt-8 rounded-3xl border border-teal-100 bg-gradient-to-br from-teal-50/70 via-slate-50 to-sky-50/50 p-6 text-center sm:p-8">
+          <p className="text-sm font-semibold text-slate-900 sm:text-base">
+            Looking for specific clinical investigations or screening packages?
+          </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+            <Link href="/services/pregnancy-ultrasound" className="rounded-full border border-slate-200 bg-white px-3.5 py-2 font-medium text-slate-700 shadow-sm hover:border-teal-500 hover:text-teal-800">
+              Obstetric & Pregnancy Scan →
+            </Link>
+            <Link href="/services/hepatitis-b-screening" className="rounded-full border border-slate-200 bg-white px-3.5 py-2 font-medium text-slate-700 shadow-sm hover:border-teal-500 hover:text-teal-800">
+              Hepatitis B Profile & Vaccine →
+            </Link>
+            <Link href="/services/malaria-and-typhoid-test" className="rounded-full border border-slate-200 bg-white px-3.5 py-2 font-medium text-slate-700 shadow-sm hover:border-teal-500 hover:text-teal-800">
+              Malaria & Typhoid Testing →
+            </Link>
+            <Link href="/services/kidney-and-diabetes-screening" className="rounded-full border border-slate-200 bg-white px-3.5 py-2 font-medium text-slate-700 shadow-sm hover:border-teal-500 hover:text-teal-800">
+              Kidney & Diabetes (HbA1c) →
+            </Link>
+            <Link href="/services" className="rounded-full bg-teal-700 px-4 py-2 font-semibold text-white shadow-sm hover:bg-teal-800">
+              All 7 Diagnostic Services →
+            </Link>
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
@@ -456,7 +512,11 @@ function Payment() {
           </p>
           <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
             <WhatsAppButton label="Ask about NHIS cover" className="w-full sm:w-auto" />
-            <a href={`tel:${SITE.phonePrimary.tel}`} className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:border-teal-500 hover:text-teal-700">
+            <a
+              href={`tel:${SITE.phonePrimary.tel}`}
+              onClick={() => trackPhoneClick(SITE.phonePrimary.tel, "Payment Call Button")}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:border-teal-500 hover:text-teal-700"
+            >
               <Phone className="h-4 w-4" /> Call
             </a>
           </div>
@@ -691,7 +751,12 @@ function Footer() {
             <h3 className="mb-3 font-semibold text-white">Call us</h3>
             <div className="space-y-2">
               {[SITE.phonePrimary, SITE.phoneSecondary].map((p, i) => (
-                <a key={p.tel} href={`tel:${p.tel}`} className="flex items-center gap-3 rounded-xl border border-slate-800 px-4 py-3 transition hover:border-teal-500 hover:text-white">
+                <a
+                  key={p.tel}
+                  href={`tel:${p.tel}`}
+                  onClick={() => trackPhoneClick(p.tel, i === 0 ? "Footer Primary Phone" : "Footer Secondary Phone")}
+                  className="flex items-center gap-3 rounded-xl border border-slate-800 px-4 py-3 transition hover:border-teal-500 hover:text-white"
+                >
                   <Phone className="h-4 w-4 text-teal-400" />
                   <span>{p.display}</span>
                   <span className="ml-auto text-xs text-slate-400">{i === 0 ? "Primary line" : "Secondary desk"}</span>
@@ -724,8 +789,22 @@ function Footer() {
 function MobileBar() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 flex gap-3 border-t border-slate-800 bg-slate-950/90 p-3 backdrop-blur md:hidden" style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}>
-      <a href={`tel:${SITE.phonePrimary.tel}`} className="flex flex-1 items-center justify-center gap-2 rounded-full border border-slate-700 py-3 text-sm font-semibold text-white"><Phone className="h-4 w-4" /> Call</a>
-      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex flex-[2] items-center justify-center gap-2 rounded-full bg-emerald-700 py-3 text-sm font-semibold text-white"><MessageCircle className="h-4 w-4" /> Book via WhatsApp</a>
+      <a
+        href={`tel:${SITE.phonePrimary.tel}`}
+        onClick={() => trackPhoneClick(SITE.phonePrimary.tel, "Mobile Bar Call")}
+        className="flex flex-1 items-center justify-center gap-2 rounded-full border border-slate-700 py-3 text-sm font-semibold text-white"
+      >
+        <Phone className="h-4 w-4" /> Call
+      </a>
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => trackWhatsAppClick("Mobile Bar WhatsApp")}
+        className="flex flex-[2] items-center justify-center gap-2 rounded-full bg-emerald-700 py-3 text-sm font-semibold text-white"
+      >
+        <MessageCircle className="h-4 w-4" /> Book via WhatsApp
+      </a>
     </div>
   );
 }

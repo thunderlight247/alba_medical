@@ -1,0 +1,4 @@
+file '/home/light/Documents/alba-medical-diagnostic-centre/motion-graphics/assets/v2_scene1.mp3'
+file '/home/light/Documents/alba-medical-diagnostic-centre/motion-graphics/assets/v2_scene2.mp3'
+file '/home/light/Documents/alba-medical-diagnostic-centre/motion-graphics/assets/v2_scene3.mp3'
+file '/home/light/Documents/alba-medical-diagnostic-centre/motion-graphics/assets/v2_scene4.mp3'

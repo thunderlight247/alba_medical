@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import { SITE, SITE_URL } from "@/lib/site";
@@ -11,6 +12,9 @@ const siteUrl = SITE_URL;
 
 /** Paste the Google Search Console token into NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION. */
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+
+/** Google Analytics 4 Measurement ID (e.g. G-XXXXXXXXXX) */
+const gaId = process.env.NEXT_PUBLIC_GA_ID?.trim();
 
 const title = "Alba Medical Diagnostic Centre | Laboratory, Ultrasound & ECG in Bolgatanga";
 const description =
@@ -28,6 +32,8 @@ export const metadata: Metadata = {
     "ECG Bolgatanga",
     "NHIS laboratory tests",
     "Alba Medical Diagnostic Centre",
+    "hepatitis B test Bolgatanga",
+    "pregnancy ultrasound Bolgatanga",
   ],
   authors: [{ name: SITE.name }],
   alternates: { canonical: "/" },
@@ -73,15 +79,30 @@ export const viewport: Viewport = { themeColor: "#020617", width: "device-width"
 
 const clinicSchema = {
   "@context": "https://schema.org",
-  "@type": "MedicalClinic",
+  "@type": ["MedicalClinic", "MedicalBusiness", "DiagnosticLab"],
+  "@id": `${siteUrl}/#clinic`,
   name: SITE.name,
+  alternateName: SITE.altName,
   url: siteUrl,
   image: `${siteUrl}/images/og-cover.jpg`,
   logo: `${siteUrl}/icon.svg`,
   description:
-    "Diagnostic centre in Bolgatanga offering laboratory tests, color Doppler ultrasound and ECG for clinician-referred and walk-in clients. HEFRA licensed and NHIS accredited.",
+    "HeFRA-licensed and NHIS-accredited medical diagnostic centre on Commercial Street, Bolgatanga. Clinical laboratory testing, high-resolution color Doppler ultrasound, and resting 12-lead ECG.",
   telephone: SITE.phonePrimary.display,
   hasMap: SITE.mapLink,
+  priceRange: "$$",
+  currenciesAccepted: "GHS",
+  paymentAccepted: "NHIS card, cash, Mobile Money",
+  medicalSpecialty: [
+    "MedicalLaboratory",
+    "DiagnosticRadiology",
+    "Cardiovascular",
+  ],
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 10.7866,
+    longitude: -0.8528,
+  },
   address: {
     "@type": "PostalAddress",
     streetAddress: "AC 181 Commercial Street",
@@ -93,9 +114,24 @@ const clinicSchema = {
     { "@type": "PropertyValue", propertyID: "GhanaPostGPS", value: SITE.digitalAddress },
     { "@type": "PropertyValue", propertyID: "PlusCode", value: SITE.plusCode },
   ],
-  areaServed: ["Bolgatanga", "Upper East Region", "Northern Region"],
-  paymentAccepted: "NHIS card, cash, Mobile Money",
-  currenciesAccepted: "GHS",
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Bolgatanga" },
+    { "@type": "AdministrativeArea", name: "Upper East Region" },
+    { "@type": "AdministrativeArea", name: "Northern Region" },
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Diagnostic Services",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Color Doppler Ultrasound Scan", url: `${siteUrl}/services/ultrasound-scan` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Obstetric & Pregnancy Ultrasound", url: `${siteUrl}/services/pregnancy-ultrasound` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "12-Lead Resting ECG Heart Monitoring", url: `${siteUrl}/services/ecg-test` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Clinical Medical Laboratory Tests", url: `${siteUrl}/services/medical-laboratory-tests` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Hepatitis B Screening & Profile", url: `${siteUrl}/services/hepatitis-b-screening` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Malaria Microscopy & Typhoid Testing", url: `${siteUrl}/services/malaria-and-typhoid-test` } },
+      { "@type": "Offer", itemOffered: { "@type": "MedicalProcedure", name: "Kidney Function & Diabetes Screening", url: `${siteUrl}/services/kidney-and-diabetes-screening` } },
+    ],
+  },
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -110,6 +146,26 @@ const clinicSchema = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={sans.variable}>
+      <head>
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body className="font-sans">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }} />
         <SmoothScroll />

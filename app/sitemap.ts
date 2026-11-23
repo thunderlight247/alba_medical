@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
+import { SERVICES_DATA } from "@/lib/services";
 import { isSanityConfigured } from "@/sanity/env";
 import { client } from "@/sanity/lib/client";
 import { postSitemapQuery } from "@/sanity/lib/queries";
@@ -10,6 +11,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const routes: MetadataRoute.Sitemap = [
     { url: `${SITE_URL}/`, lastModified: now, changeFrequency: "monthly", priority: 1 },
+    { url: `${SITE_URL}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    ...SERVICES_DATA.map((service) => ({
+      url: `${SITE_URL}/services/${service.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
   ];
 
@@ -23,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${SITE_URL}/blog/${post.slug}`,
         lastModified: post.publishedAt ? new Date(post.publishedAt) : now,
         changeFrequency: "yearly" as const,
-        priority: 0.6,
+        priority: 0.7,
       })),
     ];
   } catch {
